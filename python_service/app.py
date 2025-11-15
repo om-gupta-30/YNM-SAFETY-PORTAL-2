@@ -9,7 +9,7 @@ import os
 from werkzeug.utils import secure_filename
 
 app = Flask(__name__)
-CORS(app)  # Enable CORS for frontend requests
+CORS(app, origins=["https://ynm-safety-portal-2.vercel.app"])  # Enable CORS for frontend requests
 
 # Configuration
 UPLOAD_FOLDER = 'uploads'

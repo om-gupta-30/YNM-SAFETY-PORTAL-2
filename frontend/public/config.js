@@ -14,11 +14,13 @@ const CONFIG = {
     // Example: 'https://ynm-backend.onrender.com/api'
     
     // For separate deployments (Vercel frontend + Render backend):
-    // Uncomment the line below and replace with your Render backend URL
-    // return 'https://your-backend-name.onrender.com/api';
+    // Production backend URL
+    const BASE_URL = "https://ynm-safety-portal-2.onrender.com";
+    const PYTHON_URL = "https://ynm-safety-portal-2-1.onrender.com";
+    return BASE_URL + '/api';
     
     // For same-domain deployment (if frontend and backend are on same domain):
-    return window.location.origin + '/api';
+    // return window.location.origin + '/api';
   })()
 };
 

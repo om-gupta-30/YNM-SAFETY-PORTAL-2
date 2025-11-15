@@ -92,11 +92,13 @@ function setupChatbotListeners() {
             }
             
             // Use the same API base URL logic as api.js
+            const BASE_URL = "https://ynm-safety-portal-2.onrender.com";
+            const PYTHON_URL = "https://ynm-safety-portal-2-1.onrender.com";
             const API_BASE_URL = (() => {
                 if (window.location.hostname === 'localhost' || window.location.hostname === '127.0.0.1') {
                     return 'http://localhost:5002/api';
                 }
-                return window.location.origin + '/api';
+                return BASE_URL + '/api';
             })();
             const response = await fetch(`${API_BASE_URL}/chatbot/ask`, {
                 method: 'POST',

@@ -1,6 +1,8 @@
 // API Utility - Centralized API calls for frontend
 // API URL is configured in config.js
 // If CONFIG is not loaded, fallback to auto-detection
+const BASE_URL = "https://ynm-safety-portal-2.onrender.com";
+const PYTHON_URL = "https://ynm-safety-portal-2-1.onrender.com";
 const API_BASE_URL = (() => {
   if (window.CONFIG && window.CONFIG.API_BASE_URL) {
     return window.CONFIG.API_BASE_URL;
@@ -9,7 +11,7 @@ const API_BASE_URL = (() => {
   if (window.location.hostname === 'localhost' || window.location.hostname === '127.0.0.1') {
     return 'http://localhost:5002/api';
   }
-  return window.location.origin + '/api';
+  return BASE_URL + '/api';
 })();
 
 // Get auth token from localStorage

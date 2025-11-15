@@ -1,4 +1,4 @@
-#!/Users/omg/Desktop/YSM/python_service/venv/bin/python
+#!/Users/omg/Desktop/YSM/python_service/venv/bin/python3
 # -*- coding: utf-8 -*-
 import re
 import sys

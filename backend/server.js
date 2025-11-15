@@ -16,7 +16,10 @@ app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 
 // Enable CORS
-app.use(cors());
+app.use(cors({
+  origin: ["https://ynm-safety-portal-2.vercel.app"],
+  credentials: true
+}));
 
 // Serve static files from frontend/public
 const frontendPath = path.join(__dirname, '..', 'frontend', 'public');
