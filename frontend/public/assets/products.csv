@@ -1,0 +1,11 @@
+Product_ID,Product_Name,Sub_Type,Unit,Notes
+P001,W Beam Crash Barrier,W-Beam,Meter,Standard crash barrier
+P002,W Beam Crash Barrier,Thrie-Beam,Meter,Heavy-duty barrier
+P003,W Beam Crash Barrier,Double W-Beam,Meter,Double-layer safety
+P004,W Beam Crash Barrier,Crash-Tested,Meter,Certified tested barrier
+P005,Hot Thermoplastic Paint,White,Kg,Standard road paint
+P006,Hot Thermoplastic Paint,Yellow,Kg,Standard road paint
+P007,Hot Thermoplastic Paint,Reflective,Kg,High visibility paint
+P008,Signages,Directional,Piece,"Arrows, route boards"
+P009,Signages,Informational,Piece,"Speed limits, name boards"
+P010,Signages,Cautionary,Piece,Warning signs

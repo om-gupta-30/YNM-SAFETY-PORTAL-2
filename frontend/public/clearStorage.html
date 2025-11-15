@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Clear Storage</title>
+    <style>
+        body { font-family: Arial; padding: 40px; text-align: center; }
+        button { padding: 15px 30px; font-size: 16px; background: #dc3545; color: white; border: none; border-radius: 8px; cursor: pointer; }
+        button:hover { background: #c82333; }
+        .info { margin: 20px 0; padding: 20px; background: #f8f9fa; border-radius: 8px; }
+    </style>
+</head>
+<body>
+    <h1>Clear All Local Storage</h1>
+    <div class="info">
+        <p>This will clear all localStorage data including:</p>
+        <ul style="text-align: left; display: inline-block;">
+            <li>Auth tokens</li>
+            <li>Cached user data</li>
+            <li>Session information</li>
+            <li>Any other stored data</li>
+        </ul>
+    </div>
+    <button onclick="clearStorage()">Clear All Storage</button>
+    <div id="result" style="margin-top: 20px;"></div>
+    
+    <script>
+        function clearStorage() {
+            try {
+                localStorage.clear();
+                document.getElementById('result').innerHTML = 
+                    '<p style="color: green; font-weight: bold;">✅ All localStorage cleared! Redirecting to login...</p>';
+                setTimeout(() => {
+                    window.location.href = 'login.html';
+                }, 2000);
+            } catch (error) {
+                document.getElementById('result').innerHTML = 
+                    '<p style="color: red;">❌ Error: ' + error.message + '</p>';
+            }
+        }
+    </script>
+</body>
+</html>

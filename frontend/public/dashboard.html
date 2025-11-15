@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dashboard & Analytics - YNM Safety Portal</title>
+    <link rel="stylesheet" href="./styles/styles.css">
+    <script src="./config.js"></script>
+</head>
+<body>
+    <div class="container">
+        <!-- Header -->
+        <header class="header" style="position: relative;">
+            <div class="header-logo-container">
+                <img src="LOGO.png" alt="YNM Safety Logo" class="company-logo-header" onerror="this.style.display='none';">
+                <h1>Dashboard & Analytics</h1>
+            </div>
+            <button id="logoutBtn" class="submit-button" type="button" style="position: absolute; top: 20px; right: 20px; padding: 8px 16px; font-size: 0.9rem; background: linear-gradient(135deg, #D4AF37 0%, #FFD700 100%); color: #2C1810;">Logout</button>
+        </header>
+
+        <!-- Back to Home Button -->
+        <div class="back-button-container">
+            <a href="index.html" class="back-button">← Back to Home</a>
+        </div>
+
+        <!-- Coming Soon Content -->
+        <main class="coming-soon-container">
+            <div class="coming-soon">
+                <h2>Coming Soon</h2>
+            </div>
+        </main>
+
+        <!-- Footer -->
+        <footer class="footer">
+            <p>© YNM Safety Pvt. Ltd.</p>
+        </footer>
+    </div>
+    
+    <script>
+        // Check if user is logged in
+        function checkLogin() {
+            const token = localStorage.getItem('authToken');
+            
+            if (!token) {
+                window.location.href = 'login.html';
+                return false;
+            }
+            
+            return true;
+        }
+        
+        // Check login on page load
+        document.addEventListener('DOMContentLoaded', function() {
+            if (!checkLogin()) {
+                // Redirect will happen automatically
+            }
+            
+            // Setup logout button
+            const logoutBtn = document.getElementById('logoutBtn');
+            if (logoutBtn) {
+                logoutBtn.addEventListener('click', function(e) {
+                    e.preventDefault();
+                    e.stopPropagation();
+                    // Use global handleLogout if available, otherwise use local
+                    if (typeof window.handleLogout === 'function') {
+                        window.handleLogout(e);
+                    } else {
+                        // Clear all authentication data
+                        localStorage.removeItem('sessionActive');
+                        localStorage.removeItem('activeUser');
+                        localStorage.removeItem('rememberMe');
+                        localStorage.removeItem('authToken');
+                        localStorage.removeItem('userRole');
+                        // Redirect to login page
+                        window.location.href = 'login.html';
+                    }
+                });
+                logoutBtn.type = 'button';
+            }
+        });
+    </script>
+    <script src="./scripts/api.js"></script>
+    <script src="./scripts/script.js"></script>
+</body>
+</html>
+

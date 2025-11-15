@@ -1,0 +1,251 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Orders - YNM Safety Portal</title>
+    <link rel="stylesheet" href="./styles/styles.css">
+    <link rel="stylesheet" href="./chatbot.css">
+    <script src="./config.js"></script>
+    <script src="./scripts/validation.js"></script>
+    <script src="./scripts/duplicateChecker.js"></script>
+    <script src="./scripts/typoCorrector.js"></script>
+</head>
+<body>
+    <div class="container">
+        <!-- Header -->
+        <header class="header" style="position: relative;">
+            <div class="header-logo-container">
+                <img src="LOGO.png" alt="YNM Safety Logo" class="company-logo-header" onerror="this.style.display='none';">
+                <h1>Orders</h1>
+            </div>
+            <div style="position: absolute; top: 20px; right: 20px; display: flex; gap: 10px; align-items: center;">
+                <button onclick="toggleChatbotPanel(); return false;" class="submit-button" style="padding: 8px 16px; font-size: 0.9rem; background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); color: white; border: none; border-radius: 6px; cursor: pointer; box-shadow: 0 2px 8px rgba(0, 0, 0, 0.2);">💬 AI Chatbot</button>
+                <button id="logoutBtn" class="submit-button" type="button" style="padding: 8px 16px; font-size: 0.9rem; background: linear-gradient(135deg, #D4AF37 0%, #FFD700 100%); color: #2C1810;">Logout</button>
+            </div>
+        </header>
+
+        <!-- Back to Home Button -->
+        <div class="back-button-container">
+            <a href="index.html" class="back-button">← Back to Home</a>
+        </div>
+
+        <!-- Tabs -->
+        <div class="tabs-container">
+            <button class="tab-button active" data-tab="create">Create New Order</button>
+            <button class="tab-button" data-tab="view">View Past Orders</button>
+        </div>
+
+        <!-- Create New Order Section -->
+        <main class="orders-container">
+            <div id="createOrderSection" class="tab-content active">
+                <div class="order-form-wrapper">
+                    <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 20px;">
+                        <h2 style="margin: 0;">Create New Order</h2>
+                        <!-- PDF Upload Button - Small, top corner -->
+                        <div style="position: relative;">
+                            <input type="file" id="pdfFileInput" accept=".pdf,application/pdf" style="position: absolute; width: 0; height: 0; opacity: 0; pointer-events: none;">
+                            <button type="button" id="pdfUploadBtn" class="pdf-upload-btn" title="Upload Order PDF">
+                                📄 Upload PDF
+                            </button>
+                        </div>
+                    </div>
+                    
+                    <!-- PDF Upload Status (shown below form title when needed) -->
+                    <div id="pdfUploadStatus" style="display: none; margin-bottom: 15px; padding: 10px; border-radius: 6px; font-size: 0.9rem;"></div>
+
+                    <!-- PDF Parsing Confirmation Modal -->
+                    <div id="pdfConfirmationModal" class="modal" style="display: none;">
+                        <div class="modal-content" style="max-width: 600px;">
+                            <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 20px;">
+                                <h2 style="margin: 0; color: var(--primary-maroon);">📄 Confirm Parsed Order Details</h2>
+                                <button id="closePdfModal" class="close-button" style="background: none; border: none; font-size: 24px; cursor: pointer; color: #667eea;">&times;</button>
+                            </div>
+                            <div id="pdfParsedFields" style="margin-bottom: 20px;">
+                                <!-- Parsed fields will be inserted here -->
+                            </div>
+                            <div style="display: flex; gap: 10px; justify-content: flex-end;">
+                                <button type="button" id="cancelPdfModal" class="submit-button" style="background: #6c757d; padding: 10px 20px;">Cancel</button>
+                                <button type="button" id="confirmPdfModal" class="submit-button" style="padding: 10px 20px;">Confirm & Fill Form</button>
+                            </div>
+                        </div>
+                    </div>
+
+                    <form id="orderForm" class="order-form">
+                        <div class="form-group">
+                            <label for="manufacturerName">Manufacturer Name *</label>
+                            <select id="manufacturerName" class="form-select" required>
+                                <option value="">Select manufacturer...</option>
+                            </select>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="productName">Product Name *</label>
+                            <select id="productName" class="form-select" required disabled>
+                                <option value="">Select manufacturer first...</option>
+                            </select>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="productType">Product Type *</label>
+                            <select id="productType" class="form-select" required disabled>
+                                <option value="">Select product first...</option>
+                            </select>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="quantity">Quantity * <span id="unitDisplay" style="color: #667eea; font-weight: normal; margin-left: 8px;"></span></label>
+                            <input type="number" id="quantity" class="form-input" min="1" step="1" required placeholder="Enter quantity">
+                        </div>
+
+                        <div class="form-group">
+                            <label for="fromLocation">From Location *</label>
+                            <input type="text" id="fromLocation" class="form-input" placeholder="Enter origin address..." required>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="toLocation">To Location *</label>
+                            <input type="text" id="toLocation" class="form-input" placeholder="Enter destination address..." required>
+                        </div>
+
+                        <!-- Cost Summary -->
+                        <div class="order-summary" id="orderSummary" style="display: none;">
+                            <h3>Cost Summary</h3>
+                            <div class="summary-item">
+                                <span class="summary-label">Price per Unit:</span>
+                                <span class="summary-value" id="pricePerUnitDisplay">₹0</span>
+                            </div>
+                            <div class="summary-item">
+                                <span class="summary-label">Distance:</span>
+                                <span class="summary-value" id="distanceDisplay">-</span>
+                            </div>
+                            <div class="summary-item">
+                                <span class="summary-label">Rate per km:</span>
+                                <span class="summary-value">₹10</span>
+                            </div>
+                            <div class="summary-item">
+                                <span class="summary-label">Manufacturer Cost:</span>
+                                <span class="summary-value" id="manufacturerCostDisplay">₹0</span>
+                            </div>
+                            <div class="summary-item">
+                                <span class="summary-label">Transport Cost:</span>
+                                <span class="summary-value" id="transportCostDisplay">₹0</span>
+                            </div>
+                            <div class="summary-item total-cost">
+                                <span class="summary-label">Total Cost:</span>
+                                <span class="summary-value" id="totalCostDisplay">₹0</span>
+                            </div>
+                        </div>
+
+
+                        <button type="submit" class="submit-button">Add Order</button>
+                    </form>
+                </div>
+            </div>
+
+            <!-- View Past Orders Section -->
+            <div id="viewOrdersSection" class="tab-content">
+                <div class="orders-table-wrapper">
+                    <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 20px; flex-wrap: wrap; gap: 15px;">
+                        <h2 style="margin: 0;">Past Orders</h2>
+                        <div style="display: flex; gap: 10px; align-items: center; flex-wrap: wrap;">
+                            <div style="display: flex; gap: 8px; align-items: center; flex-wrap: wrap;">
+                                <input 
+                                    type="number" 
+                                    id="orderSearchInput" 
+                                    placeholder="Order ID (e.g., 1, 2, 3)" 
+                                    style="padding: 8px 12px; border: 1px solid #ddd; border-radius: 4px; font-size: 0.9rem; min-width: 120px;"
+                                    min="1"
+                                />
+                                <input 
+                                    type="text" 
+                                    id="manufacturerSearchInput" 
+                                    placeholder="Manufacturer name" 
+                                    style="padding: 8px 12px; border: 1px solid #ddd; border-radius: 4px; font-size: 0.9rem; min-width: 150px;"
+                                />
+                                <input 
+                                    type="text" 
+                                    id="productSearchInput" 
+                                    placeholder="Product name" 
+                                    style="padding: 8px 12px; border: 1px solid #ddd; border-radius: 4px; font-size: 0.9rem; min-width: 150px;"
+                                />
+                                <input 
+                                    type="text" 
+                                    id="productTypeSearchInput" 
+                                    placeholder="Product type" 
+                                    style="padding: 8px 12px; border: 1px solid #ddd; border-radius: 4px; font-size: 0.9rem; min-width: 130px;"
+                                />
+                                <button 
+                                    id="searchOrderBtn" 
+                                    class="submit-button" 
+                                    style="white-space: nowrap; font-size: 0.9rem; padding: 8px 16px;"
+                                >
+                                    🔍 Search
+                                </button>
+                                <button 
+                                    id="clearSearchBtn" 
+                                    class="submit-button" 
+                                    style="white-space: nowrap; font-size: 0.9rem; padding: 8px 16px; background: #6c757d;"
+                                >
+                                    Clear
+                                </button>
+                            </div>
+                            <div style="display: flex; gap: 10px;">
+                                <button id="exportExcelBtn" class="submit-button" style="white-space: nowrap; font-size: 0.9rem; padding: 8px 16px;">📊 Export Excel</button>
+                                <button id="exportPdfBtn" class="submit-button" style="white-space: nowrap; font-size: 0.9rem; padding: 8px 16px;">📄 Export PDF</button>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="table-wrapper">
+                        <table class="data-table" id="ordersTable">
+                            <thead>
+                                <tr>
+                                    <th>Order ID</th>
+                                    <th>Date</th>
+                                    <th>Manufacturer</th>
+                                    <th>Product</th>
+                                    <th>Product Type</th>
+                                    <th>Quantity</th>
+                                    <th>From</th>
+                                    <th>To</th>
+                                    <th>Manufacturer Cost</th>
+                                    <th>Transport Cost</th>
+                                    <th>Total Cost</th>
+                                    <th>Action</th>
+                                </tr>
+                            </thead>
+                            <tbody id="ordersTableBody">
+                                <tr>
+                                    <td colspan="12" style="text-align: center; color: #999; padding: 40px;">
+                                        No orders yet. Create your first order!
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </main>
+
+        <!-- Footer -->
+        <footer class="footer">
+            <p>© YNM Safety Pvt. Ltd.</p>
+        </footer>
+    </div>
+
+    <!-- Google Maps JavaScript API - only for distance calculation -->
+    <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyAc0CFjsw2LjUHtFf68ngZ0ZVyUccOLL7U&libraries=geometry"></script>
+    <!-- PDF extraction now handled by Python backend - pdf.js no longer needed -->
+    <!-- Fuse.js Library for fuzzy matching -->
+    <script src="https://cdn.jsdelivr.net/npm/fuse.js@7.0.0/dist/fuse.min.js"></script>
+    <!-- API Utility -->
+    <script src="./scripts/api.js"></script>
+    <!-- Export Libraries -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.18.5/xlsx.full.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf-autotable/3.5.31/jspdf.plugin.autotable.min.js"></script>
+    <script src="./scripts/orders.js"></script>
+    <script src="./chatbot.js"></script>
+</body>
+</html>
+

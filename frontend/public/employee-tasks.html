@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Employee Dashboard - My Tasks | YNM Safety Portal</title>
+    <link rel="stylesheet" href="./styles/styles.css">
+    <script src="./config.js"></script>
+</head>
+<body>
+    <div class="container">
+        <!-- Header -->
+        <header class="header" style="position: relative;">
+            <div class="header-logo-container">
+                <img src="LOGO.png" alt="YNM Safety Logo" class="company-logo-header" onerror="this.style.display='none';">
+                <h1>My Tasks</h1>
+            </div>
+            <div id="userGreeting" style="text-align: center; margin-top: 10px; color: #FFF8E7; font-size: 16px; font-weight: 500; width: 100%;"></div>
+            <div style="position: absolute; top: 20px; right: 20px; display: flex; gap: 10px;">
+                <button onclick="window.location.href='index.html'" class="submit-button" style="padding: 8px 16px; font-size: 0.9rem; background: linear-gradient(135deg, #7A0A0A 0%, #5A0808 100%); color: #FFF8E7;">Back to Home</button>
+                <button id="logoutBtn" class="submit-button" type="button" style="padding: 8px 16px; font-size: 0.9rem; background: linear-gradient(135deg, #D4AF37 0%, #FFD700 100%); color: #2C1810;">Logout</button>
+            </div>
+        </header>
+
+        <!-- Statistics -->
+        <section class="task-stats">
+            <div class="stat-card">
+                <h3>Total Tasks</h3>
+                <p id="totalTasksCount">0</p>
+            </div>
+            <div class="stat-card">
+                <h3>Pending</h3>
+                <p id="pendingTasksCount">0</p>
+            </div>
+            <div class="stat-card">
+                <h3>Completed</h3>
+                <p id="completedTasksCount">0</p>
+            </div>
+            <div class="stat-card">
+                <h3>Carried Forward</h3>
+                <p id="carriedForwardCount">0</p>
+            </div>
+        </section>
+
+        <!-- Today's Tasks -->
+        <section class="tasks-section">
+            <h2>Today's Tasks</h2>
+            <div id="todayTasks" class="tasks-list">
+                <p class="no-tasks">No tasks for today.</p>
+            </div>
+        </section>
+
+        <!-- Previous Incomplete Tasks (Carried Forward) -->
+        <section class="tasks-section">
+            <h2>Previous Incomplete Tasks (Carried Forward)</h2>
+            <div id="carriedForwardTasks" class="tasks-list">
+                <p class="no-tasks">No carried forward tasks.</p>
+            </div>
+        </section>
+
+        <!-- Completed Tasks (Collapsible) -->
+        <section class="tasks-section">
+            <h2 onclick="toggleCompletedTasks()" style="cursor: pointer;">
+                Completed Tasks <span id="completedToggle">▼</span>
+            </h2>
+            <div id="completedTasks" class="tasks-list" style="display: none;">
+                <p class="no-tasks">No completed tasks.</p>
+            </div>
+        </section>
+    </div>
+
+    <script src="./scripts/api.js"></script>
+    <script src="./scripts/employee-tasks.js?v=6"></script>
+</body>
+</html>
+

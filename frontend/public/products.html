@@ -1,0 +1,147 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Products - YNM Safety Portal</title>
+    <link rel="stylesheet" href="./styles/styles.css">
+    <link rel="stylesheet" href="./chatbot.css">
+    <script src="./config.js"></script>
+    <script src="./scripts/validation.js"></script>
+    <script src="./scripts/duplicateChecker.js"></script>
+    <script src="./scripts/typoCorrector.js"></script>
+</head>
+<body>
+    <div class="container">
+        <!-- Header -->
+        <header class="header" style="position: relative;">
+            <div class="header-logo-container">
+                <img src="LOGO.png" alt="YNM Safety Logo" class="company-logo-header" onerror="this.style.display='none';">
+                <h1>Products</h1>
+            </div>
+            <div style="position: absolute; top: 20px; right: 20px; display: flex; gap: 10px; align-items: center;">
+                <button onclick="toggleChatbotPanel(); return false;" class="submit-button" style="padding: 8px 16px; font-size: 0.9rem; background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); color: white; border: none; border-radius: 6px; cursor: pointer; box-shadow: 0 2px 8px rgba(0, 0, 0, 0.2);">💬 AI Chatbot</button>
+                <button id="logoutBtn" class="submit-button" type="button" style="padding: 8px 16px; font-size: 0.9rem; background: linear-gradient(135deg, #D4AF37 0%, #FFD700 100%); color: #2C1810;">Logout</button>
+            </div>
+        </header>
+
+        <!-- Back to Home Button -->
+        <div class="back-button-container">
+            <a href="index.html" class="back-button">← Back to Home</a>
+        </div>
+
+        <!-- Search Bar, Sort, Add Button, and Export Buttons -->
+        <div style="margin-bottom: 25px; margin-top: 10px;">
+            <div class="search-container" style="display: flex; justify-content: space-between; align-items: center; gap: 20px; margin-bottom: 15px;">
+                <input 
+                    type="text" 
+                    id="searchInput" 
+                    class="search-input" 
+                    placeholder="Search by Product Type or Subtype..."
+                    autocomplete="off"
+                    style="flex: 1;"
+                >
+                <button id="addProductBtn" class="submit-button" style="white-space: nowrap;">+ Add Product</button>
+            </div>
+            <div style="display: flex; justify-content: space-between; align-items: center; gap: 10px; flex-wrap: wrap;">
+                <div style="display: flex; align-items: center; gap: 10px;">
+                    <label for="sortSelect" style="font-weight: 500; color: #333;">Sort by:</label>
+                    <select id="sortSelect" class="form-select" style="width: auto; min-width: 200px;">
+                        <option value="name-asc">Alphabet (A-Z)</option>
+                        <option value="name-desc">Alphabet (Z-A)</option>
+                    </select>
+                </div>
+                <div style="display: flex; gap: 10px;">
+                    <button id="exportExcelBtn" class="submit-button" style="white-space: nowrap; font-size: 0.9rem; padding: 8px 16px;">📊 Export Excel</button>
+                    <button id="exportPdfBtn" class="submit-button" style="white-space: nowrap; font-size: 0.9rem; padding: 8px 16px;">📄 Export PDF</button>
+                </div>
+            </div>
+        </div>
+
+        <!-- Add Product Form Modal -->
+        <div id="addProductModal" class="modal" style="display: none;">
+            <div class="modal-content">
+                <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 20px;">
+                    <h2>Add New Product</h2>
+                    <button id="closeProductModal" class="close-button" style="background: none; border: none; font-size: 24px; cursor: pointer; color: #667eea;">&times;</button>
+                </div>
+                <form id="addProductForm">
+                    <div class="form-group">
+                        <label for="newProductName">Product Name *</label>
+                        <input type="text" id="newProductName" class="form-input" required placeholder="e.g., W Beam Crash Barrier">
+                    </div>
+                    <div class="form-group">
+                        <label for="newSubType">Product Type (Subtype) *</label>
+                        <input type="text" id="newSubType" class="form-input" required placeholder="e.g., W-Beam">
+                    </div>
+                    <div class="form-group">
+                        <label for="newUnit">Unit *</label>
+                        <select id="newUnit" class="form-select" required>
+                            <option value="">Select unit...</option>
+                            <option value="m">Meter (m)</option>
+                            <option value="ft">Feet (ft)</option>
+                            <option value="kg">Kilogram (kg)</option>
+                            <option value="litre">Litre (L)</option>
+                            <option value="unit">Unit</option>
+                            <option value="pcs">Pieces (pcs)</option>
+                            <option value="ton">Ton</option>
+                            <option value="sqm">Square Meter (sqm)</option>
+                            <option value="sqft">Square Feet (sqft)</option>
+                            <option value="box">Box</option>
+                            <option value="roll">Roll</option>
+                            <option value="set">Set</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label for="newNotes">Notes</label>
+                        <textarea id="newNotes" class="form-input" rows="3" placeholder="Optional notes about the product"></textarea>
+                    </div>
+                    <div style="display: flex; gap: 10px; justify-content: flex-end;">
+                        <button type="button" id="cancelProductBtn" class="back-button" style="margin: 0;">Cancel</button>
+                        <button type="submit" class="submit-button">Add Product</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+
+        <!-- Products Table -->
+        <main class="table-container">
+            <div class="table-wrapper">
+                <table class="data-table" id="productsTable">
+                    <thead>
+                        <tr>
+                            <th>Sr. No.</th>
+                            <th>Product Type</th>
+                            <th>Subtypes</th>
+                            <th>Unit</th>
+                            <th>Notes</th>
+                            <th>Action</th>
+                        </tr>
+                    </thead>
+                    <tbody id="productsTableBody">
+                        <!-- Data will be loaded here -->
+                    </tbody>
+                </table>
+                <div id="noResults" class="no-results" style="display: none;">
+                    <p>No products found matching your search.</p>
+                </div>
+            </div>
+        </main>
+
+        <!-- Footer -->
+        <footer class="footer">
+            <p>© YNM Safety Pvt. Ltd.</p>
+        </footer>
+    </div>
+
+    <!-- Export Libraries -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.18.5/xlsx.full.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf-autotable/3.5.31/jspdf.plugin.autotable.min.js"></script>
+    <!-- API Utility -->
+    <script src="./scripts/api.js"></script>
+    <script src="./scripts/products.js"></script>
+    <script src="./chatbot.js"></script>
+</body>
+</html>
+

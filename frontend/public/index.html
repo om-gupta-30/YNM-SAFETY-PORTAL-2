@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>YNM Safety Portal</title>
+    <link rel="stylesheet" href="./styles/styles.css">
+    <link rel="stylesheet" href="./chatbot.css">
+    <script src="./config.js"></script>
+</head>
+<body>
+    <div class="container">
+        <!-- Header with Greeting and Logout -->
+        <header class="header" style="position: relative;">
+            <div class="header-logo-container">
+                <img src="LOGO.png" alt="YNM Safety Logo" class="company-logo-header" onerror="this.style.display='none';">
+                <h1>YNM Safety Portal</h1>
+            </div>
+            <div id="userGreeting" style="text-align: center; margin-top: 10px; color: #FFF8E7; font-size: 16px; font-weight: 500; width: 100%;"></div>
+            <div style="position: absolute; top: 20px; right: 20px; display: flex; gap: 10px; align-items: center;">
+                <button onclick="toggleChatbotPanel(); return false;" class="submit-button" style="padding: 8px 16px; font-size: 0.9rem; background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); color: white; border: none; border-radius: 6px; cursor: pointer; box-shadow: 0 2px 8px rgba(0, 0, 0, 0.2);">💬 AI Chatbot</button>
+                <button id="logoutBtn" class="submit-button" type="button" style="padding: 8px 16px; font-size: 0.9rem; background: linear-gradient(135deg, #D4AF37 0%, #FFD700 100%); color: #2C1810;">Logout</button>
+            </div>
+        </header>
+
+        <!-- Navigation Cards -->
+        <nav class="navigation">
+            <div class="nav-card" data-page="dashboard">
+                <div class="nav-icon">📊</div>
+                <h2>Dashboard & Analytics</h2>
+            </div>
+            <div class="nav-card" data-page="products">
+                <div class="nav-icon">📦</div>
+                <h2>Products</h2>
+            </div>
+            <div class="nav-card" data-page="manufacturers">
+                <div class="nav-icon">🏭</div>
+                <h2>Manufacturers / Importers</h2>
+            </div>
+            <div class="nav-card" data-page="transport">
+                <div class="nav-icon">🚚</div>
+                <h2>Transport</h2>
+            </div>
+            <div class="nav-card" data-page="orders">
+                <div class="nav-icon">📋</div>
+                <h2>Orders</h2>
+            </div>
+            <div class="nav-card" data-page="tasks" onclick="window.location.href='tasks.html'; return false;" style="cursor: pointer;">
+                <div class="nav-icon">✅</div>
+                <h2>Tasks</h2>
+            </div>
+            <!-- Employee: Update Task Status Button -->
+            <div id="employeeUpdateStatusCard" class="nav-card" onclick="window.location.href='update-task-status.html'; return false;" style="cursor: pointer; display: none !important;">
+                <div class="nav-icon">📝</div>
+                <h2>Update Task Status</h2>
+            </div>
+            <!-- Admin: Past Task Status Button -->
+            <div id="adminTaskStatusCard" class="nav-card" onclick="window.location.href='past-task-status.html'; return false;" style="cursor: pointer; display: none !important;">
+                <div class="nav-icon">📜</div>
+                <h2>Past Task Status</h2>
+            </div>
+        </nav>
+
+        <!-- Summary Row -->
+        <section class="summary">
+            <div class="summary-item">
+                <span class="summary-label">Total Orders:</span>
+                <span class="summary-value" id="totalOrdersValue">0</span>
+            </div>
+            <div class="summary-item">
+                <span class="summary-label">Total Products:</span>
+                <span class="summary-value" id="totalProductsValue">10</span>
+            </div>
+            <div class="summary-item">
+                <span class="summary-label">Total Manufacturers:</span>
+                <span class="summary-value" id="totalManufacturersValue">15</span>
+            </div>
+        </section>
+
+        <!-- Footer -->
+        <footer class="footer">
+            <p>© YNM Safety Pvt. Ltd.</p>
+        </footer>
+    </div>
+
+    <script src="./scripts/api.js"></script>
+    <script src="./scripts/script.js"></script>
+    <script src="./chatbot.js"></script>
+</body>
+</html>
+

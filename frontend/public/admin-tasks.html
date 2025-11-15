@@ -1,0 +1,167 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Admin Dashboard - Task Management | YNM Safety Portal</title>
+    <link rel="stylesheet" href="./styles/styles.css">
+    <script src="./config.js"></script>
+    <script src="./scripts/duplicateChecker.js"></script>
+    <script src="./scripts/typoCorrector.js"></script>
+</head>
+<body>
+    <div class="container">
+        <!-- Header -->
+        <header class="header" style="position: relative;">
+            <div class="header-logo-container">
+                <img src="LOGO.png" alt="YNM Safety Logo" class="company-logo-header" onerror="this.style.display='none';">
+                <h1>Admin Dashboard - Task Management</h1>
+            </div>
+            <div id="userGreeting" style="text-align: center; margin-top: 10px; color: #FFF8E7; font-size: 16px; font-weight: 500; width: 100%;"></div>
+            <div style="position: absolute; top: 20px; right: 20px; display: flex; gap: 10px;">
+                <button onclick="window.location.href='index.html'" class="submit-button" style="padding: 8px 16px; font-size: 0.9rem; background: linear-gradient(135deg, #7A0A0A 0%, #5A0808 100%); color: #FFF8E7;">Back to Home</button>
+                <button id="logoutBtn" class="submit-button" type="button" style="padding: 8px 16px; font-size: 0.9rem; background: linear-gradient(135deg, #D4AF37 0%, #FFD700 100%); color: #2C1810;">Logout</button>
+            </div>
+        </header>
+
+        <!-- Task Assignment Form -->
+        <section class="task-form-section">
+            <h2>Assign New Task</h2>
+            <form id="taskForm" class="task-form">
+                <div class="form-row">
+                    <div class="form-group">
+                        <label for="employeeSelect">Employee *</label>
+                        <select id="employeeSelect" required>
+                            <option value="">Select Employee</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label for="deadlineInput">Deadline *</label>
+                        <input type="date" id="deadlineInput" required>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label for="taskTitleInput">Task Title *</label>
+                    <input type="text" id="taskTitleInput" placeholder="Enter task title" required>
+                </div>
+                <div class="form-group">
+                    <label for="taskDescriptionInput">Task Description *</label>
+                    <textarea id="taskDescriptionInput" rows="3" placeholder="Enter task description" required></textarea>
+                </div>
+                <button type="submit" class="submit-button">Assign Task</button>
+            </form>
+        </section>
+
+        <!-- Statistics -->
+        <section class="task-stats">
+            <div class="stat-card">
+                <h3>Total Tasks</h3>
+                <p id="totalTasksCount">0</p>
+            </div>
+            <div class="stat-card">
+                <h3>Pending Tasks</h3>
+                <p id="pendingTasksCount">0</p>
+            </div>
+            <div class="stat-card">
+                <h3>Completed Tasks</h3>
+                <p id="completedTasksCount">0</p>
+            </div>
+            <div class="stat-card">
+                <h3>Carried Forward</h3>
+                <p id="carriedForwardCount">0</p>
+            </div>
+        </section>
+
+        <!-- Filters -->
+        <section class="task-filters">
+            <div class="filter-group">
+                <label for="filterEmployee">Filter by Employee:</label>
+                <select id="filterEmployee">
+                    <option value="">All Employees</option>
+                </select>
+            </div>
+            <div class="filter-group">
+                <label for="filterStatus">Filter by Status:</label>
+                <select id="filterStatus">
+                    <option value="">All Status</option>
+                    <option value="Pending">Pending</option>
+                    <option value="Completed">Completed</option>
+                    <option value="Carried Forward">Carried Forward</option>
+                </select>
+            </div>
+            <button id="clearFilters" class="clear-button">Clear Filters</button>
+        </section>
+
+        <!-- Tasks Table -->
+        <section class="tasks-section">
+            <h2>All Tasks</h2>
+            <div class="table-container">
+                <table id="tasksTable" class="tasks-table">
+                    <thead>
+                        <tr>
+                            <th>Employee</th>
+                            <th>Task Title</th>
+                            <th>Description</th>
+                            <th>Deadline</th>
+                            <th>Status</th>
+                            <th>Employee Status Update</th>
+                            <th>Assigned Date</th>
+                            <th>Actions</th>
+                        </tr>
+                    </thead>
+                    <tbody id="tasksTableBody">
+                        <tr>
+                            <td colspan="8" class="no-tasks">No tasks found. Assign a task to get started.</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </section>
+    </div>
+
+    <!-- Edit Task Modal -->
+    <div id="editTaskModal" class="modal">
+        <div class="modal-content">
+            <span class="close-modal">&times;</span>
+            <h2>Edit Task</h2>
+            <form id="editTaskForm">
+                <input type="hidden" id="editTaskId">
+                <div class="form-group">
+                    <label for="editEmployeeSelect">Employee *</label>
+                    <select id="editEmployeeSelect" required>
+                        <option value="">Select Employee</option>
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label for="editTaskTitleInput">Task Title *</label>
+                    <input type="text" id="editTaskTitleInput" required>
+                </div>
+                <div class="form-group">
+                    <label for="editTaskDescriptionInput">Task Description *</label>
+                    <textarea id="editTaskDescriptionInput" rows="3" required></textarea>
+                </div>
+                <div class="form-group">
+                    <label for="editDeadlineInput">Deadline *</label>
+                    <input type="date" id="editDeadlineInput" required>
+                </div>
+                <div class="form-group">
+                    <label for="editStatusSelect">Status *</label>
+                    <select id="editStatusSelect" required>
+                        <option value="Pending">Pending</option>
+                        <option value="Completed">Completed</option>
+                        <option value="Carried Forward">Carried Forward</option>
+                    </select>
+                </div>
+                <div class="modal-buttons">
+                    <button type="submit" class="submit-button">Save Changes</button>
+                    <button type="button" class="cancel-button" id="cancelEdit">Cancel</button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <script src="./scripts/api.js"></script>
+    <script src="./scripts/admin-tasks.js"></script>
+</body>
+</html>
+

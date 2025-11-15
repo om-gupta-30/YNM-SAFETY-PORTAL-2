@@ -1,0 +1,77 @@
+YNM Safety Portal - Final Project Structure
+===========================================
+
+.
+├── frontend/
+│   ├── public/
+│   │   ├── index.html
+│   │   ├── login.html
+│   │   ├── products.html
+│   │   ├── manufacturers.html
+│   │   ├── orders.html
+│   │   ├── transport.html
+│   │   ├── tasks.html
+│   │   ├── dashboard.html
+│   │   ├── admin-tasks.html
+│   │   ├── employee-tasks.html
+│   │   └── LOGO.png
+│   └── src/
+│       ├── css/
+│       │   └── styles.css
+│       ├── js/
+│       │   ├── api.js
+│       │   ├── login.js
+│       │   ├── script.js
+│       │   ├── products.js
+│       │   ├── manufacturers.js
+│       │   ├── orders.js
+│       │   ├── transport.js
+│       │   ├── tasks.js
+│       │   ├── admin-tasks.js
+│       │   └── employee-tasks.js
+│       └── assets/
+│           ├── products.csv
+│           ├── manufacturers.csv
+│           └── locations.csv
+│
+├── backend/
+│   ├── server.js
+│   ├── package.json
+│   ├── .env.example
+│   ├── .gitignore
+│   ├── config/
+│   │   └── database.js
+│   ├── models/
+│   │   ├── User.js
+│   │   ├── Product.js
+│   │   ├── Manufacturer.js
+│   │   ├── Order.js
+│   │   ├── Task.js
+│   │   └── Location.js
+│   ├── routes/
+│   │   ├── auth.js
+│   │   ├── products.js
+│   │   ├── manufacturers.js
+│   │   ├── orders.js
+│   │   ├── tasks.js
+│   │   └── pdf.js
+│   ├── controllers/
+│   │   ├── authController.js
+│   │   ├── productController.js
+│   │   ├── manufacturerController.js
+│   │   ├── orderController.js
+│   │   ├── taskController.js
+│   │   └── pdfController.js
+│   ├── middleware/
+│   │   └── auth.js
+│   ├── scripts/
+│   │   └── seedData.js
+│   ├── uploads/
+│   └── utils/
+│
+├── python_service/
+│   ├── app.py
+│   └── requirements.txt
+│
+└── README.md
+

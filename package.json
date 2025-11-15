@@ -1,0 +1,21 @@
+{
+  "name": "ysm-portal-demo-workflow-",
+  "version": "1.0.0",
+  "description": "A comprehensive full-stack web application for managing safety products, manufacturers, orders, transport costs, and task assignments for YNM Safety Pvt. Ltd.",
+  "main": "index.js",
+ "scripts": {
+  "frontend": "cd frontend && live-server --port=3001",
+  "backend": "cd backend && node server.js",
+  "python": "cd python_service && python app.py",
+  "start": "concurrently \"npm run backend\" \"npm run python\" \"npm run frontend\""
+}
+
+,
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "type": "commonjs",
+  "dependencies": {
+    "concurrently": "^9.2.1"
+  }
+}

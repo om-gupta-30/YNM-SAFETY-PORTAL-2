@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Task Status | YNM Safety Portal</title>
+    <link rel="stylesheet" href="./styles/styles.css">
+    <script src="./config.js"></script>
+</head>
+<body>
+    <div class="container">
+        <!-- Header -->
+        <header class="header" style="position: relative;">
+            <div class="header-logo-container">
+                <img src="LOGO.png" alt="YNM Safety Logo" class="company-logo-header" onerror="this.style.display='none';">
+                <h1>Task Status</h1>
+            </div>
+            <div id="userGreeting" style="text-align: center; margin-top: 10px; color: #FFF8E7; font-size: 16px; font-weight: 500; width: 100%;"></div>
+            <div style="position: absolute; top: 20px; right: 20px; display: flex; gap: 10px;">
+                <button onclick="window.location.href='index.html'" class="submit-button" style="padding: 8px 16px; font-size: 0.9rem; background: linear-gradient(135deg, #7A0A0A 0%, #5A0808 100%); color: #FFF8E7;">Back to Home</button>
+                <button id="logoutBtn" class="submit-button" type="button" style="padding: 8px 16px; font-size: 0.9rem; background: linear-gradient(135deg, #D4AF37 0%, #FFD700 100%); color: #2C1810;">Logout</button>
+            </div>
+        </header>
+
+        <!-- Filters -->
+        <section class="task-filters" style="margin: 20px 0;">
+            <div class="filter-group">
+                <label for="filterEmployee">Filter by Employee:</label>
+                <select id="filterEmployee">
+                    <option value="">All Employees</option>
+                </select>
+            </div>
+            <div class="filter-group">
+                <label for="filterStatus">Filter by Status:</label>
+                <select id="filterStatus">
+                    <option value="">All Status</option>
+                    <option value="Pending">Pending</option>
+                    <option value="Completed">Completed</option>
+                    <option value="Carried Forward">Carried Forward</option>
+                </select>
+            </div>
+            <button id="clearFilters" class="clear-button">Clear Filters</button>
+        </section>
+
+        <!-- Tasks Table -->
+        <section class="tasks-section">
+            <h2>All Task Status Updates</h2>
+            <div class="table-container">
+                <table id="tasksTable" class="tasks-table">
+                    <thead>
+                        <tr>
+                            <th>Employee</th>
+                            <th>Task Title</th>
+                            <th>Description</th>
+                            <th>Deadline</th>
+                            <th>Status</th>
+                            <th>Status Update</th>
+                            <th>Updated On</th>
+                            <th>Assigned Date</th>
+                        </tr>
+                    </thead>
+                    <tbody id="tasksTableBody">
+                        <tr>
+                            <td colspan="8" class="no-tasks">Loading tasks...</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </section>
+    </div>
+
+    <script src="./scripts/api.js"></script>
+    <script src="./scripts/view-task-status.js"></script>
+</body>
+</html>
+

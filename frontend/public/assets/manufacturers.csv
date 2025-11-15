@@ -1,0 +1,16 @@
+Manufacturer_ID,Manufacturer_Name,Location,Contact_Number,Products_Offered,Product_Prices (Rs.)
+M001,SafeRoad India Pvt Ltd,Pune,9876543210,"W-Beam, Thrie-Beam","W-Beam: 420, Thrie-Beam: 460"
+M002,Highway Guard Systems,Nashik,9823412341,"Double W-Beam, Crash-Tested","Double W-Beam: 510, Crash-Tested: 570"
+M003,Metro Safety Co.,Mumbai,9934112233,"W-Beam, Directional, Informational, Cautionary","W-Beam: 440, Directional: 300, Informational: 300, Cautionary: 300"
+M004,RoadMark Solutions,Nagpur,9755543210,"Thermoplastic Paint (White, Yellow)","White: 270, Yellow: 290"
+M005,ReflectoMark Pvt Ltd,Ahmedabad,8865432234,"Reflective Paint, Directional, Informational, Cautionary","Reflective Paint: 380, Directional: 310, Informational: 310, Cautionary: 310"
+M006,Bharat InfraTech,Bengaluru,9900011111,"W-Beam, Crash-Tested","W-Beam: 450, Crash-Tested: 560"
+M007,SafetyLine Industries,Hyderabad,9911122233,"Double W-Beam, Paints","Double W-Beam: 520, Paints: 310"
+M008,Markwell Coatings,Chennai,9876509876,Thermoplastic Paints,"White: 260, Yellow: 280, Reflective: 360"
+M009,Highway Essentials,Delhi,9810098100,"Directional, Informational, Cautionary, Reflective Paint","Directional: 320, Informational: 320, Cautionary: 320, Reflective Paint: 390"
+M010,RoadShield Engineering,Jaipur,9800000009,"W-Beam, Thrie-Beam, Directional, Informational, Cautionary","W-Beam: 430, Thrie-Beam: 470, Directional: 330, Informational: 330, Cautionary: 330"
+M011,InfraSafe Manufacturing,Surat,9876789098,"W-Beam, Paints","W-Beam: 440, Paints: 300"
+M012,MetalGuard Ltd,Indore,9922245678,Crash-Tested Barriers,Crash-Tested: 580
+M013,RoadPro India,Lucknow,9898989898,"Directional, Informational, Cautionary","Directional: 310, Informational: 310, Cautionary: 310"
+M014,SmartRoad Systems,Kochi,9833344444,"Paints, Directional, Informational, Cautionary","Paints: 290, Directional: 300, Informational: 300, Cautionary: 300"
+M015,BarrierMaster Pvt Ltd,Chandigarh,9812345678,"W-Beam, Crash-Tested","W-Beam: 440, Crash-Tested: 550"
